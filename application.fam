@@ -1,0 +1,15 @@
+App(
+    appid="tpms_test_rx14",
+    name="TPMS",
+    apptype=FlipperAppType.EXTERNAL,
+    targets=["f7"],
+    entry_point="tpms_app",
+    requires=["gui"],
+    stack_size=8 * 1024,
+    order=50,
+    fap_icon="tpms_10px.png",
+    fap_category="Sub-GHz",
+    fap_icon_assets="images",
+    fap_version="4.5",
+    fap_description="TPMS 4.5 FIX4 EN: RX Autosave ON",
+)
