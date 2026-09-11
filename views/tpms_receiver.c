@@ -654,11 +654,14 @@ void tpms_view_receiver_relearn_start(
     /* CW Relearn and EL-50448 use a continuous LF carrier while the CC1101
        async RX remains active. EL-50448 is fixed to 125 kHz; CW Relearn may
        use 125.0 or 134.2 kHz. */
+    /* EL-50449 and EL-50448 modes use 12.5% carrier duty, CW uses 50% */
     const uint32_t duration_ms =
         el50448 ? TPMS_EL50448_DURATION_MS : TPMS_RELEARN_COMMON_DURATION_MS;
     const uint32_t carrier_hz =
         el50448 ? TPMS_LF_CARRIER_HZ : tpms_receiver->relearn_cw_frequency_hz;
-    furi_hal_rfid_tim_read_start((float)carrier_hz, 0.5f);
+    const float carrier_duty =
+        el50448 ? TPMS_EL50448_CARRIER_DUTY : TPMS_RELEARN_COMMON_CARRIER_DUTY;
+    furi_hal_rfid_tim_read_start((float)carrier_hz, carrier_duty);
     furi_timer_start(tpms_receiver->relearn_timer, furi_ms_to_ticks(duration_ms));
 }
 
